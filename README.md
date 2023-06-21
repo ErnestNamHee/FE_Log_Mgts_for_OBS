@@ -8,7 +8,7 @@
 	- Directory : **nhe-obs-eu-w0-demo-log/**
 - Reference OBS Logging: https://docs.prod-cloud-ocb.orange-business.com/usermanual/obs/en-us_topic_0045853553.html
 
-![/Attachements/Pasted image 20230619142422.png]
+![OBS Logging Image](/Attachements/Pasted image 20230619142422.png)
 
 ### 2.2.2 - DMS Kafka
 
