@@ -167,7 +167,7 @@ Please note:
 
 ![DMS](/Attachements/Pasted%20image%2020230619151104.png)
 
-Hit **Start*
+Hit **Start**
 
 ![DMS](/Attachements/Pasted%20image%2020230619151149.png)
 
@@ -229,7 +229,7 @@ The compatibliity version between,  Logstash and Kibana is Key
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-sudo apt-get update && sudo apt-get install logstash 
+sudo apt-get update && sudo apt-get install logstash=1:7.10.2-1
 
 sudo apt list --all-versions logstash
 
@@ -362,3 +362,47 @@ GET /kibana_data_obs_access/_count
 
 ```
 
+#### 2.2.5.2. Kibana
+
+- Access  Kibana UI by selecting CSS in the Console. 
+- Click on the Cluster created previously
+
+![DMS](/Attachements/Pasted%20image%2020230621175056.png)
+
+- Click on **Kibana Public Access** tab and click on the **Kibana Public IP Address**
+
+![DMS](/Attachements/Pasted%20image%2020230621175255.png)
+
+- Log into Kibana UI using the login **admin** and password you created previously
+
+![DMS](/Attachements/Pasted%20image%2020230621175444.png)
+
+- Access to Kibana Dev Tools
+
+![DMS](/Attachements/Pasted%20image%2020230621175606.png)
+
+- Create Index **\/kibana_data_obs_access**
+- Count the number of rows
+
+
+```Elasticsearch
+
+GET /kibana_data_obs_access/_count
+
+```
+
+
+![DMS](/Attachements/Pasted%20image%2020230621175955.png)
+
+- Go to Discover in the left menu
+
+![DMS](/Attachements/Pasted%20image%2020230621180048.png)
+
+- Data should be available to access and query 
+
+![DMS](/Attachements/Pasted%20image%2020230621180125.png)
+
+- And Dashboard could be created
+
+
+![DMS](/Attachements/Pasted%20image%2020230621180231.png)
