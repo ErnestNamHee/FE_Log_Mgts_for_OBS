@@ -1,0 +1,60 @@
+input {
+  kafka{
+    codec => json
+    bootstrap_servers => "xx.xx.xx.xx:9092,xx.xx.xx.xx:9092,xx.xx.xx.xx:9092"
+    topics => ["obsaccesslogs"]
+  }
+}
+
+
+filter {
+  grok {
+    match => {
+      "ObsAccessEntry" => "%{NOTSPACE:BucketOwner} %{NOTSPACE:BucketName} \[%{HTTPDATE:Time}\] %{IPV4:Remote-IP} %{NOTSPACE:Requester} %{NOTSPACE:RequestID} %{NOTSPACE:Operation} %{NOTSPACE:Key} \"%{WORD:Request-URI-HttpMethod} %{URIPATHPARAM:Request-URI-Url} %{WORD:Request-URI-HttpVersion01}\/%{NOTSPACE:Request-URI-HttpVersion02}\" %{NOTSPACE:HTTPStatus} %{NOTSPACE:ErrorCode} %{NOTSPACE:BytesSent} %{NOTSPACE:ObjectSize} %{NOTSPACE:TotalTime} %{NOTSPACE:Turn-AroundTime} %{QS:Referer} %{QS:User-Agent} %{NOTSPACE:VersionID} %{NOTSPACE:STSLogUrn} %{NOTSPACE:StorageClass} %{NOTSPACE:TargetStorageClass} %{NOTSPACE:Misc}"
+    }
+  }
+
+  date {
+    match => ["Time","dd/MMM/yyyy:HH:mm:ss Z" ]
+    target => "TransactionTime"
+    }
+
+  mutate {
+    gsub => ["Referer","\"",""]
+    gsub => ["User-Agent","\"",""]
+    gsub => ["Misc","\"",""]
+    add_field => {
+      "Request-URI" => "%{Request-URI-HttpMethod} %{Request-URI-Url} %{Request-URI-HttpVersion01}/%{Request-URI-HttpVersion02}"
+    }
+    remove_field => ["Request-URI-HttpMethod","Request-URI-Url", "Request-URI-HttpVersion01","Request-URI-HttpVersion02"]
+
+    convert => {
+      "TotalTime" => "integer"
+      "Turn-AroundTime" => "integer"
+      "HTTPStatus" => "integer"
+    }
+  }
+
+
+}
+
+
+output {
+  stdout {
+        codec => json_lines
+    }
+
+  file {
+        codec => json_lines
+        path => "/home/cloud/logstash/logs/logstash_%{+YYYY-MM-dd}.log"
+    }
+
+  elasticsearch {
+      hosts => ["https://xx.xx.xx.xx:9200","https://xx.xx.xx.xx:9200","https://xx.xx.xx.xx:9200"]
+      index => "kibana_data_obs_access"
+      user => "admin"
+      password => "xxxxxx"
+      cacert => "/home/cloud/logstash/settings/CloudSearchService.cer"
+      document_id => "%{Requester}_%{RequestID}_%{TransactionTime}"
+  }
+}
