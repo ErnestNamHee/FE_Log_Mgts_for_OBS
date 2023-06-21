@@ -8,7 +8,7 @@
 	- Directory : **nhe-obs-eu-w0-demo-log/**
 - Reference OBS Logging: https://docs.prod-cloud-ocb.orange-business.com/usermanual/obs/en-us_topic_0045853553.html
 
-![OBS Logging Image](/Attachements/Pasted image 20230619142422.png)
+![OBS Logging Image](/Attachements/Pasted%20image%2020230619142422.png)
 
 ### 2.2.2 - DMS Kafka
 
@@ -23,9 +23,10 @@ One of the key features that make Flexible Engine DMS Kafka stand out is its abi
 - Create DMS Kafka Queue named **nhe-dms-kafka-demo**
 - Make sure to use the VPC where the others resources could be created as well : VPC (**nhe-vpc-demos**) and Subnet (**subnet-7096-dms-demo**)
 
-![Pasted image 20230619143647.png]
 
-![[Pasted image 20230619143520.png]]
+![DMS 1](/Attachements/Pasted%20image%2020230619143647.png)
+
+![DMS 1](/Attachements/Pasted%20image%2020230619143520.png)
 
 - The DMS Kafka queue should be **running** 
  
